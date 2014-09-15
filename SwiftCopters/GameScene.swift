@@ -49,8 +49,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(gravityX, 0.0)
 
         let borderBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
+        borderBody.categoryBitMask = categoryScreen
         nodeWorld.physicsBody = borderBody
-        nodeWorld.physicsBody.categoryBitMask = categoryScreen
     }
     
     //7
@@ -82,13 +82,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         nodeCopter.addChild(spriteCopter)
         nodeWorld.addChild(nodeCopter)
         
-        nodeCopter.physicsBody = SKPhysicsBody(circleOfRadius: 0.9*spriteCopter.frame.size.width/2)
-        nodeCopter.physicsBody.linearDamping = linearDamping
-        nodeCopter.physicsBody.angularDamping = angularDamping
-        nodeCopter.physicsBody.allowsRotation = true
-        nodeCopter.physicsBody.affectedByGravity = false
-        nodeCopter.physicsBody.categoryBitMask = categoryCopter;
-        nodeCopter.physicsBody.contactTestBitMask = categoryScreen | categoryEnemy;
+        let nodeBody = SKPhysicsBody(circleOfRadius: 0.9*spriteCopter.frame.size.width/2)
+        nodeBody.linearDamping = linearDamping
+        nodeBody.angularDamping = angularDamping
+        nodeBody.allowsRotation = true
+        nodeBody.affectedByGravity = false
+        nodeBody.categoryBitMask = categoryCopter;
+        nodeBody.contactTestBitMask = categoryScreen | categoryEnemy;
+        nodeCopter.physicsBody = nodeBody;
     }
 
     //Handle touches
